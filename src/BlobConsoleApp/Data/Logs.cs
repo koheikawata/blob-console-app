@@ -6,7 +6,7 @@ using Azure.Storage.Blobs;
 
 namespace BlobConsoleApp.Data;
 
-internal class Logs : UploadData
+public class Logs : UploadData
 {
     public override string FolderName => "logs";
     public DateTime BeginTime { get; set; }

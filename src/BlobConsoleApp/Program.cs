@@ -10,7 +10,7 @@ using BlobConsoleApp.Data;
 
 namespace BlobConsoleApp;
 
-internal class Program
+public class Program
 {
     static async Task Main(string[] args)
     {
@@ -23,8 +23,8 @@ internal class Program
         AssemblyLoadContext.Default.Unloading += (ctx) => cts.Cancel();
         Console.CancelKeyPress += (sender, cpe) => cts.Cancel();
 
-        await UploadFile(configuration);
-        await WhenCancelled(cts.Token);
+        await UploadFile(configuration).ConfigureAwait(false);
+        await WhenCancelled(cts.Token).ConfigureAwait(false);
     }
 
     private static async Task UploadFile(IConfiguration configuration)
@@ -61,7 +61,7 @@ internal class Program
 
                     uploadDataList[i] = uploadDataList[i].GetMetadata();
 
-                    await uploadDataList[i].UploadMetadataAsync();
+                    await uploadDataList[i].UploadMetadataAsync().ConfigureAwait(true);
 
                     uploadDataList[i].DeleteFiles();
                 }
